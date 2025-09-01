@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUNDIE - Fashion Forward</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Lugrasimo&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated background shapes -->
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <!-- Profile Section -->
+        <div class="profile-section">
+            <div class="profile-image">
+                <img src="logomundie.png" alt="">
+            </div>
+            <h1 class="brand-name">MUNDIÉ</h1>
+            <p class="tagline">Luxury Fashion • Timeless Elegance</p>
+        </div>
+
+        <!-- Links Section -->
+        <div class="links-container">
+            <a href="#" class="link-item" target="_blank" onclick="handleClick('catalog')">
+                <i class="link-icon fas fa-book-open"></i>
+                <span>Katalog Produk</span>
+            </a>
+
+            <strong> SOCIAL MEDIA </strong>
+
+            <a href="https://wa.me/6282225457724" class="link-item" target="_blank" onclick="handleSocial('whatsapp')">
+                <i class="link-icon fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+            </a>
+            
+            <a href="https://www.instagram.com/mundieproject?igsh=MzJzeWlwZnFsMGcx" target="_blank" class="link-item" onclick="handleSocial('instagram')">
+                <i class="link-icon fab fa-instagram"></i>
+                <span>Instagram</span>
+            </a>
+            
+            <a href="https://www.tiktok.com/@mundi.project?_t=ZS-8z9AOIleDM9&_r=1" target="_blank" class="link-item" onclick="handleSocial('tiktok')">
+                <i class="link-icon fab fa-tiktok"></i>
+                <span>TikTok</span>
+            </a>
+
+            <strong> E - COMMERSE </strong>
+            
+            <a href="#" class="link-item" target="_blank" onclick="handleClick('shopee')">
+                <i class="link-icon fas fa-shopping-cart"></i>
+                <span>Shopee</span>
+            </a>
+
+            <a href="#" class="link-item" target="_blank" onclick="handleClick('tiktokshop')">
+                <i class="link-icon fas fa-store"></i>
+                <span>TikTok Shop</span>
+            </a>
+        </div>
+
+        <p class="footer-text">✨ Follow us untuk update fashion terbaru</p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
