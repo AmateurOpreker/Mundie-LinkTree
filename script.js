@@ -14,7 +14,6 @@ function handleClick(linkType) {
     };
 
     // For demo purposes, show alert. Replace with actual navigation
-    alert(`Navigating to: ${linkType.charAt(0).toUpperCase() + linkType.slice(1).replace('-', ' ')}\n\nURL: ${links[linkType]}\n`);
     
     // Uncomment the line below and replace with actual URLs
     // window.open(links[linkType], '_blank');
