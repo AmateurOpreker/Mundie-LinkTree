@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="iconmundie.png">
+    <title>MUNDIÉ - Katalog Produk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Lugrasimo&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Reset dan Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        .bg-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(218, 165, 32, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        .shape:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: -5s;
+        }
+
+        .shape:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            top: 80%;
+            left: 20%;
+            animation-delay: -10s;
+        }
+
+        .shape:nth-child(4) {
+            width: 120px;
+            height: 120px;
+            top: 40%;
+            left: 50%;
+            animation-delay: -15s;
+        }
+
+        /* Keyframe Animations */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(218, 165, 32, 0.2);
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            border-radius: 15px;
+            padding: 12px 20px;
+            color: #DAA520;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-button:hover {
+            background: rgba(218, 165, 32, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .header-title {
+            font-size: 42px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #DAA520, #FFD700, #B8860B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .header-subtitle {
+            color: #DAA520;
+            font-size: 18px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            border-radius: 25px;
+            padding: 12px 25px;
+            color: #DAA520;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            color: #1a1a1a;
+            border-color: #DAA520;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn:hover::before,
+        .filter-btn.active::before {
+            left: 0;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid rgba(218, 165, 32, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-out both;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(218, 165, 32, 0.2);
+            border-color: #DAA520;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
+            border-radius: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #DAA520;
+            font-size: 48px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(218, 165, 32, 0.2);
+        }
+
+        .product-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(218, 165, 32, 0.1), transparent);
+            transform: rotate(45deg);
+            animation: shine 4s infinite;
+        }
+
+        .product-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #DAA520;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .product-description {
+            color: rgba(218, 165, 32, 0.8);
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .action-btn {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            color: #1a1a1a;
+            border: none;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #DAA520;
+            border: 1px solid rgba(218, 165, 32, 0.5);
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #DAA520, #FFD700);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-secondary:hover {
+            color: #1a1a1a;
+            border-color: #DAA520;
+        }
+
+        .btn-secondary:hover::before {
+            left: 0;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(218, 165, 32, 0.3);
+        }
+
+        /* Category badges */
+        .category-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(218, 165, 32, 0.9);
+            color: #1a1a1a;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .header-title {
+                font-size: 32px;
+            }
+            
+            .filter-buttons {
+                gap: 10px;
+            }
+            
+            .filter-btn {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+
+            .back-button {
+                position: relative;
+                margin-bottom: 20px;
+                width: fit-content;
+            }
+        }
+
+        /* Animation delays for product cards */
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Animated background shapes -->
+    <div class="bg-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <a href="index.html" class="back-button" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i>
+                <span>Kembali</span>
+            </a>
+            <h1 class="header-title">KATALOG PRODUK</h1>
+            <p class="header-subtitle">Koleksi Fashion Terbaru • Luxury & Elegance</p>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Product 1 -->
+            <div class="product-card" data-category="tops">
+                <div class="product-image">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <h3 class="product-title">Blouse Silk Premium</h3>
+                <div class="product-price">Rp 299.000</div>
+                <p class="product-description">Blouse sutra premium dengan detail bordir halus. Cocok untuk acara formal maupun kasual.</p>
+                <div class="product-actions">
+                    <a href="#" class="action-btn btn-primary" onclick="orderProduct('Blouse Silk Premium')">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Pesan</span>
+                    </a>
+                    <a href="#" class="action-btn btn-secondary" onclick="viewDetails('Blouse Silk Premium')">
+                        <i class="fas fa-eye"></i>
+                        <span>Detail</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-category="bottoms">
+                <div class="product-image">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="product-title">Celana Kulot Elegant</h3>
+                <div class="product-price">Rp 249.000</div>
+                <p class="product-description">Celana kulot dengan bahan flowy yang memberikan kesan elegan dan nyaman dipakai.</p>
+                <div class="product-actions">
+                    <a href="#" class="action-btn btn-primary" onclick="orderProduct('Celana Kulot Elegant')">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Pesan</span>
+                    </a>
+                    <a href="#" class="action-btn btn-secondary" onclick="viewDetails('Celana Kulot Elegant')">
+                        <i class="fas fa-eye"></i>
+                        <span>Detail</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-category="dresses">
+                <div class="product-image">
+                    <i class="fas fa-female"></i>
+                </div>
+                <h3 class="product-title">Midi Dress Classic</h3>
+                <div class="product-price">Rp 399.000</div>
+                <p class="product-description">Dress midi dengan potongan A-line yang flattering. Perfect untuk berbagai occasion.</p>
+                <div class="product-actions">
+                    <a href="#" class="action-btn btn-primary" onclick="orderProduct('Midi Dress Classic')">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Pesan</span>
+                    </a>
+                    <a href="#" class="action-btn btn-secondary" onclick="viewDetails('Midi Dress Classic')">
+                        <i class="fas fa-eye"></i>
+                        <span>Detail</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-category="accessories">
+                <div class="product-image">
+                    <i class="fas fa-gem"></i>
+                </div>
+                <h3 class="product-title">Statement Necklace</h3>
+                <div class="product-price">Rp 159.000</div>
+                <p class="product-description">Kalung statement dengan desain minimalis yang memberikan sentuhan mewah pada outfit Anda.</p>
+                <div class="product-actions">
+                    <a href="#" class="action-btn btn-primary" onclick="orderProduct('Statement Necklace')">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Pesan</span>
+                    </a>
+                    <a href="#" class="action-btn btn-secondary" onclick="viewDetails('Statement Necklace')">
+                        <i class="fas fa-eye"></i>
+                        <span>Detail</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card" data-category="tops">
+                <div class="product-image">
+                    <i class="fas fa-shirt"></i>
+                </div>
+                <h3 class="product-title">Kemeja Oversized</h3>
+                <div class="product-price">Rp 279.000</div>
+                <p class="product-description">Kemeja oversized dengan bahan cotton premium. Style casual yang tetap chic dan trendy.</p>
+                <div class="product-actions">
+                    <a href="#" class="action-btn btn-primary" onclick="orderProduct('Kemeja Oversized')">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Pesan</span>
+                    </a>
+                    <a href="#" class="action-btn btn-secondary" onclick="viewDetails('Kemeja Oversized')">
+                        <i class="fas fa-eye"></i>
+                        <span>Detail</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card" data-category="dresses">
+                <div class="product-image">
+                    <i class="fas fa-cocktail"></i>
+                </div>
+                <h3 class="product-title">Evening Gown</h3>
+                <div class="product-price">Rp 599.000</div>
+                <p class="product-description">Gaun malam dengan detail sequin yang memukau. Sempurna untuk acara special dan formal.</p>
+                <div class="product-actions">
+                    <a href="#" class="action-btn btn-primary" onclick="orderProduct('Evening Gown')">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>Pesan</span>
+                    </a>
+                    <a href="#" class="action-btn btn-secondary" onclick="viewDetails('Evening Gown')">
+                        <i class="fas fa-eye"></i>
+                        <span>Detail</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-text" style="text-align: center; color: #DAA520; font-size: 14px; opacity: 0.8; margin-top: 40px;">
+            ✨ Hubungi kami untuk informasi size dan ketersediaan stok
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const category = button.dataset.category;
+
+                // Filter products
+                productCards.forEach(card => {
+                    if (category === 'all' || card.dataset.category === category) {
+                        card.style.display = 'block';
+                        card.style.animation = 'fadeInUp 0.5s ease-out';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Product interaction functions
+        function orderProduct(productName) {
+            // Add click animation
+            event.target.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.target.style.transform = '';
+            }, 150);
+
+            const message = `Halo MUNDIÉ! Saya tertarik dengan produk "${productName}". Bisa info lebih lanjut?`;
+            const whatsappUrl = `https://wa.me/6282225457724?text=${encodeURIComponent(message)}`;
+            
+            // For demo purposes, show alert. Uncomment line below for actual WhatsApp redirect
+            alert(`Mengarahkan ke WhatsApp untuk memesan: ${productName}`);
+            // window.open(whatsappUrl, '_blank');
+        }
+
+        function viewDetails(productName) {
+            // Add click animation
+            event.target.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.target.style.transform = '';
+            }, 150);
+
+            alert(`Menampilkan detail produk: ${productName}\n\nFitur ini akan mengarahkan ke halaman detail produk.`);
+            // Here you would typically navigate to a detailed product page
+        }
+
+        function goBack() {
+            // Add click animation
+            event.target.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                event.target.style.transform = '';
+            }, 150);
+
+            // For demo purposes, show alert. In real implementation, use history.back() or navigate to main page
+            // window.history.back();
+        }
+
+        // Add parallax effect to background shapes
+        function addParallaxEffect() {
+            document.addEventListener('mousemove', (e) => {
+                const shapes = document.querySelectorAll('.shape');
+                const x = e.clientX / window.innerWidth;
+                const y = e.clientY / window.innerHeight;
+
+                shapes.forEach((shape, index) => {
+                    const speed = (index + 1) * 0.05;
+                    const xPos = (x - 0.5) * speed * 100;
+                    const yPos = (y - 0.5) * speed * 100;
+                    shape.style.transform = `translate(${xPos}px, ${yPos}px)`;
+                });
+            });
+        }
+
+        // Add hover effects to product cards
+        function addCardHoverEffects() {
+            const productCards = document.querySelectorAll('.product-card');
+            
+            productCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    const icon = card.querySelector('.product-image i');
+                    if (icon) {
+                        icon.style.transform = 'scale(1.1) rotate(5deg)';
+                        icon.style.transition = 'transform 0.3s ease';
+                    }
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    const icon = card.querySelector('.product-image i');
+                    if (icon) {
+                        icon.style.transform = 'scale(1) rotate(0deg)';
+                    }
+                });
+            });
+        }
+
+        // Initialize all effects
+        function initializeCatalog() {
+            addParallaxEffect();
+            addCardHoverEffects();
+        }
+
+        // Run initialization when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializeCatalog);
+
+        // Alternative initialization for immediate execution
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeCatalog);
+        } else {
+            initializeCatalog();
+        }
+    </script>
+</body>
+</html>
